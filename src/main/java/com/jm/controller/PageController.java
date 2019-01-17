@@ -28,4 +28,7 @@ public class PageController {
 	public String showUserPage(@PathVariable String page){
         return "user"+"/"+page;
 	}
+	public static void main(String[] args) {
+		System.out.println("dfdfd");
+	}
 }
