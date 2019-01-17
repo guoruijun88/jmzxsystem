@@ -29,7 +29,4 @@ public class PageController {
         return "user"+"/"+page;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("dfdf");
-	}
 }
