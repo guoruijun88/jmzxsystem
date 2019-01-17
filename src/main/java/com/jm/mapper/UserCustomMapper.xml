@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.mapper.UserCustomMapper" >
+
+	<resultMap type="com.jm.pojo.UserCustom" id="userCustom">
+		<id property="username" column="username"/>
+		<result property="roleid" column="roleid"/>
+		<result property="uid" column="uid"/>
+  		<result property="realname" column="realname"/>
+  		<result property="sex" column="sex"/>
+  		<result property="position" column="position"/>
+  		<result property="address" column="address"/>
+  		<result property="phone" column="phone"/>
+  		<result property="userpwd" column="userpwd"/>
+  		<!-- 配置roles的关联 -->
+  		<association property="role" javaType="com.jm.pojo.Roles">
+  			<id property="roleid" column="roleid"/>
+  			<result property="rolename" column="rolename"/>
+  		</association>
+  		<!-- 配置menus -->
+  		<collection property="menus" ofType="com.jm.pojo.Menus">
+  			<id property="menuid" column="menuid"/>
+  			<result property="menuname" column="menuname"/>
+  			<result property="menuurl" column="menuurl"/>
+  			<result property="fatherid" column="fatherid"/>
+  			<result property="icon" column="icon"/>
+  		</collection>
+  		
+  		<!-- funs -->
+  		<collection property="funs" ofType="com.jm.pojo.Funs">
+  			<id property="funid" column="funid"/>
+  			<result property="menuid" column="menuid"/>
+  			<result property="funname" column="funname"/>
+  			<result property="funurl" column="funurl"/>
+  		</collection>
+	
+	</resultMap>
+
+  <select id="userLogin" parameterType="String" resultMap="userCustom">
+  	SELECT
+	*
+	FROM
+		users AS u
+	LEFT JOIN roles AS r ON u.roleid = r.roleid
+	LEFT JOIN roles_menus_fk AS rm ON r.roleid = rm.roleid
+	LEFT JOIN menus AS m ON rm.menuid = m.menuid
+	LEFT JOIN funs f ON m.menuid = f.menuid
+	WHERE
+	u.username = #{username}
+  </select>
+</mapper>

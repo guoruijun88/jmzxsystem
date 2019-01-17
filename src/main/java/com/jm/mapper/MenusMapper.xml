@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.mapper.MenusMapper" >
+  <resultMap id="BaseResultMap" type="com.jm.pojo.Menus" >
+    <id column="menuid" property="menuid" jdbcType="INTEGER" />
+    <result column="menuname" property="menuname" jdbcType="VARCHAR" />
+    <result column="menuurl" property="menuurl" jdbcType="VARCHAR" />
+    <result column="fatherid" property="fatherid" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    menuid, menuname, menuurl, fatherid, icon
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jm.pojo.MenusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menus
+    where menuid = #{menuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menus
+    where menuid = #{menuid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jm.pojo.MenusExample" >
+    delete from menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jm.pojo.Menus" >
+    insert into menus (menuid, menuname, menuurl, 
+      fatherid, icon)
+    values (#{menuid,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, #{menuurl,jdbcType=VARCHAR}, 
+      #{fatherid,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jm.pojo.Menus" >
+    insert into menus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuid != null" >
+        menuid,
+      </if>
+      <if test="menuname != null" >
+        menuname,
+      </if>
+      <if test="menuurl != null" >
+        menuurl,
+      </if>
+      <if test="fatherid != null" >
+        fatherid,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null" >
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherid != null" >
+        #{fatherid,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jm.pojo.MenusExample" resultType="java.lang.Integer" >
+    select count(*) from menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update menus
+    <set >
+      <if test="record.menuid != null" >
+        menuid = #{record.menuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuname != null" >
+        menuname = #{record.menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuurl != null" >
+        menuurl = #{record.menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fatherid != null" >
+        fatherid = #{record.fatherid,jdbcType=INTEGER},
+      </if>
+      <if test="record.icon != null" >
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update menus
+    set menuid = #{record.menuid,jdbcType=INTEGER},
+      menuname = #{record.menuname,jdbcType=VARCHAR},
+      menuurl = #{record.menuurl,jdbcType=VARCHAR},
+      fatherid = #{record.fatherid,jdbcType=INTEGER},
+      icon = #{record.icon,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jm.pojo.Menus" >
+    update menus
+    <set >
+      <if test="menuname != null" >
+        menuname = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        menuurl = #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherid != null" >
+        fatherid = #{fatherid,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where menuid = #{menuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jm.pojo.Menus" >
+    update menus
+    set menuname = #{menuname,jdbcType=VARCHAR},
+      menuurl = #{menuurl,jdbcType=VARCHAR},
+      fatherid = #{fatherid,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR}
+    where menuid = #{menuid,jdbcType=INTEGER}
+  </update>
+</mapper>
